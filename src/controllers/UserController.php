@@ -24,10 +24,6 @@ class UserController extends Controller {
                     'email' => $email
                 ])->execute();
 
-                echo 'inseriu';
-                exit;
-
-                $this->redirect('/');
             } 
         } 
 

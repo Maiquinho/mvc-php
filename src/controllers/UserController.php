@@ -30,4 +30,36 @@ class UserController extends Controller {
         $this->redirect('/new');
     }
 
+    public function edit($args){
+        $user = User::select()->where('id', $args['id'])->first();
+
+        $this->render('edit', [
+            'user' => $user
+        ]);
+    }
+
+    public function editAction($args){
+        $name = filter_input(INPUT_POST, 'name');
+        $email = filter_input(INPUT_POST, 'email');
+
+        if($name && $email){
+            User::update()
+                ->set('name', $name)
+                ->set('email', $email)
+                ->where('id', $args['id'])
+            ->execute();
+
+            $this->redirect('/');
+        }
+
+
+        $this->render('/user/'. $args['id'] .'/edit');
+    }
+
+
+    public function delete($args){
+        User::delete()->where('id', $args['id'])->execute();
+        $this->redirect('/');
+    }
+
 }
